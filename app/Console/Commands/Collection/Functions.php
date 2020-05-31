@@ -3,6 +3,7 @@
 namespace App\Console\Commands\Collection;
 
 use Illuminate\Console\Command;
+use Illuminate\Support\Collection;
 
 class Functions extends Command
 {
@@ -50,8 +51,36 @@ class Functions extends Command
         // print_r($collect->avg(function ($value) {
         //     return $value['value'];
         // }));
-        print_r($collect->median());
-        print_r($collect->median('value'));
+        // print_r($collect->median());
+        // print_r($collect->median('value'));
 
+        $this->offsets();
+        // $this->macros();
+
+    }
+
+    protected function offsets()
+    {
+        $collect = collect([
+            'name' => 1,
+            'username' => 222,
+        ]);
+
+        print_r($collect->offsetExists('name'));
+        print_r($collect->offsetGet('name'));
+        print_r($collect->offsetSet('name', '123123'));
+        print_r($collect->offsetSet(null, '3234234'));
+        print_r($collect->offsetUnset('name'));
+    }
+
+    protected function macros()
+    {
+        Collection::macro('prefix', function ($prefix = '') {
+            return $this->map(function ($value) use ($prefix) {
+                return $prefix.$value;
+            });
+        });
+
+        print_r(collect([1, 2, 3])->prefix('tests'));
     }
 }

@@ -559,6 +559,7 @@ class Collection implements ArrayAccess, Enumerable
 
     /**
      * Determine if the collection is empty or not.
+     * 判定数据集合是否为空
      *
      * @return bool
      */
@@ -1057,6 +1058,7 @@ class Collection implements ArrayAccess, Enumerable
 
     /**
      * Chunk the collection into chunks of the given size.
+     * 针对集合数据进行分组
      *
      * @param  int  $size
      * @return static
@@ -1078,6 +1080,7 @@ class Collection implements ArrayAccess, Enumerable
 
     /**
      * Sort through each item with a callback.
+     * 基于回调函数进行排序，返回结果集
      *
      * @param  callable|null  $callback
      * @return static
@@ -1200,6 +1203,7 @@ class Collection implements ArrayAccess, Enumerable
 
     /**
      * Take the first or last {$limit} items.
+     * 从集合中获取指定数量的值
      *
      * @param  int  $limit
      * @return static
@@ -1250,6 +1254,7 @@ class Collection implements ArrayAccess, Enumerable
 
     /**
      * Reset the keys on the underlying array.
+     * 重置集合数据的下标
      *
      * @return static
      */
@@ -1282,6 +1287,7 @@ class Collection implements ArrayAccess, Enumerable
 
     /**
      * Pad collection to the specified length with a value.
+     * 补足指定数量的指定值到集合数据中
      *
      * @param  int  $size
      * @param  mixed  $value
@@ -1304,6 +1310,7 @@ class Collection implements ArrayAccess, Enumerable
 
     /**
      * Count the number of items in the collection.
+     * 返回集合的总数
      *
      * @return int
      */
@@ -1314,6 +1321,7 @@ class Collection implements ArrayAccess, Enumerable
 
     /**
      * Add an item to the collection.
+     * 追加一个数据到集合中，并返回当前集合
      *
      * @param  mixed  $item
      * @return $this
@@ -1327,6 +1335,7 @@ class Collection implements ArrayAccess, Enumerable
 
     /**
      * Get a base Support collection instance from this collection.
+     * 基于当前集合，返回一个新的集合
      *
      * @return \Illuminate\Support\Collection
      */
@@ -1337,6 +1346,7 @@ class Collection implements ArrayAccess, Enumerable
 
     /**
      * Determine if an item exists at an offset.
+     * 判定集合的指定下标是否存在
      *
      * @param  mixed  $key
      * @return bool
@@ -1348,6 +1358,7 @@ class Collection implements ArrayAccess, Enumerable
 
     /**
      * Get an item at a given offset.
+     * 获取集合中指定下标的数据
      *
      * @param  mixed  $key
      * @return mixed
@@ -1359,6 +1370,7 @@ class Collection implements ArrayAccess, Enumerable
 
     /**
      * Set the item at a given offset.
+     * 向集合设置指定下标的数据；若下标未定义(`null`)，则追加数据
      *
      * @param  mixed  $key
      * @param  mixed  $value
@@ -1375,6 +1387,7 @@ class Collection implements ArrayAccess, Enumerable
 
     /**
      * Unset the item at a given offset.
+     * 删除集合中指定下标的数据
      *
      * @param  string  $key
      * @return void
