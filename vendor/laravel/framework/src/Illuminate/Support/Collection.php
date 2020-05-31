@@ -21,7 +21,7 @@ class Collection implements ArrayAccess, Enumerable
 
     /**
      * Create a new collection.
-     * 创建一个实例
+     * 创建一个集合实例
      *
      * @param  mixed  $items
      * @return void
@@ -33,6 +33,7 @@ class Collection implements ArrayAccess, Enumerable
 
     /**
      * Create a new collection by invoking the callback a given amount of times.
+     * 创建一个指定数量的集合；并经过 callback 进行回调处理。
      *
      * @param  int  $number
      * @param  callable|null  $callback
@@ -53,6 +54,7 @@ class Collection implements ArrayAccess, Enumerable
 
     /**
      * Get all of the items in the collection.
+     * 返回集合数据
      *
      * @return array
      */
@@ -63,6 +65,7 @@ class Collection implements ArrayAccess, Enumerable
 
     /**
      * Get a lazy collection for the items in this collection.
+     * 创建一个懒集合（支持迭代器，性能更优）
      *
      * @return \Illuminate\Support\LazyCollection
      */
@@ -73,6 +76,7 @@ class Collection implements ArrayAccess, Enumerable
 
     /**
      * Get the average value of a given key.
+     * 获取集合的平均值，支持回调函数
      *
      * @param  callable|string|null  $callback
      * @return mixed
@@ -94,6 +98,7 @@ class Collection implements ArrayAccess, Enumerable
 
     /**
      * Get the median of a given key.
+     * 中位数计算
      *
      * @param  string|array|null  $key
      * @return mixed
