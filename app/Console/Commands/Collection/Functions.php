@@ -54,7 +54,10 @@ class Functions extends Command
         // print_r($collect->median());
         // print_r($collect->median('value'));
 
-        $this->offsets();
+        echo $collect->median('value');
+
+
+        // $this->offsets();
         // $this->macros();
 
     }

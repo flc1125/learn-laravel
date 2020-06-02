@@ -41,14 +41,17 @@ class Collection implements ArrayAccess, Enumerable
      */
     public static function times($number, callable $callback = null)
     {
+        // 如果数量小余1，则返回空集合
         if ($number < 1) {
             return new static;
         }
 
+        // 如果无回调，则返回指定数量的值的集合
         if (is_null($callback)) {
             return new static(range(1, $number));
         }
 
+        // 其他情况，返回回调后的集合
         return (new static(range(1, $number)))->map($callback);
     }
 
@@ -65,7 +68,7 @@ class Collection implements ArrayAccess, Enumerable
 
     /**
      * Get a lazy collection for the items in this collection.
-     * 创建一个懒集合（支持迭代器，性能更优）
+     * 创建一个惰性集合（支持迭代器，性能更优）
      *
      * @return \Illuminate\Support\LazyCollection
      */
@@ -83,6 +86,7 @@ class Collection implements ArrayAccess, Enumerable
      */
     public function avg($callback = null)
     {
+        // 看是直接取值还是回调取值
         $callback = $this->valueRetriever($callback);
 
         $items = $this->map(function ($value) use ($callback) {
@@ -94,6 +98,8 @@ class Collection implements ArrayAccess, Enumerable
         if ($count = $items->count()) {
             return $items->sum() / $count;
         }
+
+        // 可能啥都没返回？null？
     }
 
     /**
@@ -105,6 +111,7 @@ class Collection implements ArrayAccess, Enumerable
      */
     public function median($key = null)
     {
+        // 将值进行去除指定key，去除null值，并进行排序
         $values = (isset($key) ? $this->pluck($key) : $this)
             ->filter(function ($item) {
                 return ! is_null($item);
@@ -112,16 +119,21 @@ class Collection implements ArrayAccess, Enumerable
 
         $count = $values->count();
 
+        // 如果集合数量为0，则直接返回null
         if ($count === 0) {
             return;
         }
 
+        // 【以下开始是技巧】
+        // 获取中间的数的下标，并向下取整（技巧）
         $middle = (int) ($count / 2);
 
+        // 如果中间的数是奇数，则直接取对应下标的值（技巧）
         if ($count % 2) {
             return $values->get($middle);
         }
 
+        // 如果中间的数是偶数，则取对应下标-1与对应下标值的平均值（技巧）
         return (new static([
             $values->get($middle - 1), $values->get($middle),
         ]))->average();
@@ -396,6 +408,7 @@ class Collection implements ArrayAccess, Enumerable
 
     /**
      * Remove an item from the collection by key.
+     * 删除指定 keys 的值，keys 可以是数组；并返回当前数组
      *
      * @param  string|array  $keys
      * @return $this
@@ -411,6 +424,7 @@ class Collection implements ArrayAccess, Enumerable
 
     /**
      * Get an item from the collection by key.
+     * 返回集合中某个元素的值，如果不存在，可获取 $default 的值，$default 可以为回调函数
      *
      * @param  mixed  $key
      * @param  mixed  $default
@@ -422,6 +436,7 @@ class Collection implements ArrayAccess, Enumerable
             return $this->items[$key];
         }
 
+        // 获取值，如果是回调函数，则获取回调函数后的值
         return value($default);
     }
 
@@ -1265,6 +1280,7 @@ class Collection implements ArrayAccess, Enumerable
 
     /**
      * Zip the collection together with one or more arrays.
+     * 将一个或多个数组组合压缩在一起
      *
      * e.g. new Collection([1, 2, 3])->zip([4, 5, 6]);
      *      => [[1, 4], [2, 5], [3, 6]]
