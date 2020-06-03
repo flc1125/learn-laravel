@@ -39,11 +39,11 @@ class Functions extends Command
     public function handle()
     {
         $collect = collect([1, 2, 3]);
-        $collect = collect([
-            ['name' => 1, 'value' => '123'],
-            ['name' => 2, 'value' => '222'],
-            ['name' => 3, 'value' => '444'],
-        ]);
+        // $collect = collect([
+        //     ['name' => 1, 'value' => '123'],
+        //     ['name' => 2, 'value' => '222'],
+        //     ['name' => 3, 'value' => '444'],
+        // ]);
 
         // print_r($collect->all());
         // print_r($collect->avg());
@@ -54,7 +54,8 @@ class Functions extends Command
         // print_r($collect->median());
         // print_r($collect->median('value'));
 
-        echo $collect->median('value');
+        // echo $collect->median('value');
+        echo $collect->shuffle();
 
 
         // $this->offsets();

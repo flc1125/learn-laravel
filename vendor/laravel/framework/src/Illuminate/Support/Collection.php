@@ -927,6 +927,7 @@ class Collection implements ArrayAccess, Enumerable
 
     /**
      * Recursively replace the collection items with the given items.
+     * 递归地使用参数的集合/数组的值替换当前集合的值
      *
      * @param  mixed  $items
      * @return static
@@ -938,6 +939,7 @@ class Collection implements ArrayAccess, Enumerable
 
     /**
      * Reverse items order.
+     * 返回逆向排序集合
      *
      * @return static
      */
@@ -948,6 +950,7 @@ class Collection implements ArrayAccess, Enumerable
 
     /**
      * Search the collection for a given value and return the corresponding key if successful.
+     * 搜索集合中给定的值并返回下标；其中值支持回调函数；$strict 为是否精准匹配
      *
      * @param  mixed  $value
      * @param  bool  $strict
@@ -955,11 +958,13 @@ class Collection implements ArrayAccess, Enumerable
      */
     public function search($value, $strict = false)
     {
+        // 如果不是回调函数，则直接利用原生查找
         if (! $this->useAsCallable($value)) {
             return array_search($value, $this->items, $strict);
         }
 
         foreach ($this->items as $key => $item) {
+            // 回调函数回调
             if ($value($item, $key)) {
                 return $key;
             }
@@ -970,6 +975,7 @@ class Collection implements ArrayAccess, Enumerable
 
     /**
      * Get and remove the first item from the collection.
+     * 从集合移除并返回第一个值
      *
      * @return mixed
      */
@@ -980,6 +986,7 @@ class Collection implements ArrayAccess, Enumerable
 
     /**
      * Shuffle the items in the collection.
+     * 将集合随机打乱，并返回新的集合
      *
      * @param  int|null  $seed
      * @return static
@@ -991,6 +998,7 @@ class Collection implements ArrayAccess, Enumerable
 
     /**
      * Skip the first {$count} items.
+     * 跳过指定数量的集合，支持负数
      *
      * @param  int  $count
      * @return static
@@ -1218,13 +1226,14 @@ class Collection implements ArrayAccess, Enumerable
 
     /**
      * Take the first or last {$limit} items.
-     * 从集合中获取指定数量的值
+     * 从集合中获取指定数量的值，支持负数
      *
      * @param  int  $limit
      * @return static
      */
     public function take($limit)
     {
+        // 如果为负数时，从结尾开始获取
         if ($limit < 0) {
             return $this->slice($limit, abs($limit));
         }
@@ -1316,6 +1325,7 @@ class Collection implements ArrayAccess, Enumerable
 
     /**
      * Get an iterator for the items.
+     * 返回当前集合的数组迭代器
      *
      * @return \ArrayIterator
      */
