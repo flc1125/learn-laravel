@@ -343,6 +343,7 @@ class Collection implements ArrayAccess, Enumerable
 
     /**
      * Get all items except for those with the specified keys.
+     * 返回排除指定 key 的新集合
      *
      * @param  \Illuminate\Support\Collection|mixed  $keys
      * @return static
@@ -360,6 +361,8 @@ class Collection implements ArrayAccess, Enumerable
 
     /**
      * Run a filter over each of the items.
+     * 通过给定的回调函数过滤集合，保留通过了解的集合数据；
+     * 如果不设置回调函数，则集合中所有值符合 `false` 的将会被移除。
      *
      * @param  callable|null  $callback
      * @return static
@@ -637,6 +640,7 @@ class Collection implements ArrayAccess, Enumerable
 
     /**
      * Get the values of a given key.
+     * 返回集合中指定元素的值，`$key` 的值设置为以下标
      *
      * @param  string|array  $value
      * @param  string|null  $key
@@ -649,6 +653,7 @@ class Collection implements ArrayAccess, Enumerable
 
     /**
      * Run a map over each of the items.
+     * 使用回调函数处理集合数据
      *
      * @param  callable  $callback
      * @return static
