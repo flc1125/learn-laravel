@@ -203,6 +203,7 @@ class Collection implements ArrayAccess, Enumerable
 
     /**
      * Cross join with the given lists, returning all possible permutations.
+     * 与多个集合互相组合，返回组合后的笛卡尔积集合
      *
      * @param  mixed  ...$lists
      * @return static
@@ -378,6 +379,7 @@ class Collection implements ArrayAccess, Enumerable
 
     /**
      * Get the first item from the collection passing the given truth test.
+     * 从集合中返回符合条件的第一个值，支持回调函数；`$default` 为默认值。
      *
      * @param  callable|null  $callback
      * @param  mixed  $default
@@ -390,6 +392,7 @@ class Collection implements ArrayAccess, Enumerable
 
     /**
      * Get a flattened array of the items in the collection.
+     * 将多维集合转换为一维集合，其中 `$depth` 为转换深度，默认无穷大。
      *
      * @param  int  $depth
      * @return static
@@ -401,6 +404,7 @@ class Collection implements ArrayAccess, Enumerable
 
     /**
      * Flip the items in the collection.
+     * 将集合的键和对应的值进行互换；转换后，遇到相同的键，后面的值会替换前面的
      *
      * @return static
      */
@@ -516,6 +520,7 @@ class Collection implements ArrayAccess, Enumerable
 
     /**
      * Determine if an item exists in the collection by key.
+     * 判定键是否存在，支持多个传入，必须所有满足，才能返回 true
      *
      * @param  mixed  $key
      * @return bool
@@ -535,6 +540,7 @@ class Collection implements ArrayAccess, Enumerable
 
     /**
      * Concatenate values of a given key as a string.
+     * 将集合合并为字符串
      *
      * @param  string  $value
      * @param  string|null  $glue
@@ -544,6 +550,7 @@ class Collection implements ArrayAccess, Enumerable
     {
         $first = $this->first();
 
+        // 如果是多维数组
         if (is_array($first) || is_object($first)) {
             return implode($glue, $this->pluck($value)->all());
         }
