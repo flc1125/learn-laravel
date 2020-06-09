@@ -217,6 +217,8 @@ class Collection implements ArrayAccess, Enumerable
 
     /**
      * Get the items in the collection that are not present in the given items.
+     * 返回两个数组的差集数组。该数组包括了所有在被比较的数组中，但是不在任何其他参数数组中的键值。
+     * 在返回的数组中，键名保持不变。
      *
      * @param  mixed  $items
      * @return static
@@ -228,6 +230,8 @@ class Collection implements ArrayAccess, Enumerable
 
     /**
      * Get the items in the collection that are not present in the given items, using the callback.
+     * 比较两个数组的键值（使用用户自定义函数比较键值），并返回差集。该数组包括了所有在被比较的数组中，但是不在任何其他参数数组中的键值。
+     * 在返回的数组中，键名保持不变。
      *
      * @param  mixed  $items
      * @param  callable  $callback
@@ -595,6 +599,7 @@ class Collection implements ArrayAccess, Enumerable
 
     /**
      * Join all items from the collection using a string. The final items can use a separate glue string.
+     * 将集合中的值用字符串连接；`$glue` 为连接符；`$finalGlue` 为与最后一个值的连接符
      *
      * @param  string  $glue
      * @param  string  $finalGlue
@@ -602,29 +607,37 @@ class Collection implements ArrayAccess, Enumerable
      */
     public function join($glue, $finalGlue = '')
     {
+        // 如果无结尾的连接符，直接使用 implode 连接
         if ($finalGlue === '') {
             return $this->implode($glue);
         }
 
+        // 获取集合的数量
         $count = $this->count();
 
+        // 如果集合不存在值，则直接返回空字符
         if ($count === 0) {
             return '';
         }
 
+        // 如果集合只存在一个值，则返回直接返回最后一个值
         if ($count === 1) {
             return $this->last();
         }
 
+        // 其他情况
         $collection = new static($this->items);
 
+        // 先取出最后一个值
         $finalItem = $collection->pop();
 
+        // 拼接
         return $collection->implode($glue).$finalGlue.$finalItem;
     }
 
     /**
      * Get the keys of the collection items.
+     * 返回集合中所有键的集合
      *
      * @return static
      */
@@ -635,6 +648,7 @@ class Collection implements ArrayAccess, Enumerable
 
     /**
      * Get the last item from the collection.
+     * 获取集合中的最后一个或者符合回调函数的最后一个，如果不存在，可设置默认值
      *
      * @param  callable|null  $callback
      * @param  mixed  $default
@@ -927,6 +941,7 @@ class Collection implements ArrayAccess, Enumerable
 
     /**
      * Reduce the collection to a single value.
+     * 通过回调函数，迭代每次的值，`$initial` 为初始值
      *
      * @param  callable  $callback
      * @param  mixed  $initial
