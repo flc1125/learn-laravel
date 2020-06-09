@@ -796,6 +796,7 @@ class Collection implements ArrayAccess, Enumerable
 
     /**
      * Get the items with the specified keys.
+     * 返回指定键的集合
      *
      * @param  mixed  $keys
      * @return static
@@ -806,10 +807,12 @@ class Collection implements ArrayAccess, Enumerable
             return new static($this->items);
         }
 
+        // 如果提供的也是集合类
         if ($keys instanceof Enumerable) {
             $keys = $keys->all();
         }
 
+        // 如果不是数字，就把所有参数作为键
         $keys = is_array($keys) ? $keys : func_get_args();
 
         return new static(Arr::only($this->items, $keys));
@@ -817,6 +820,7 @@ class Collection implements ArrayAccess, Enumerable
 
     /**
      * Get and remove the last item from the collection.
+     * 移除并返回集合中的最后一个值
      *
      * @return mixed
      */
@@ -827,6 +831,7 @@ class Collection implements ArrayAccess, Enumerable
 
     /**
      * Push an item onto the beginning of the collection.
+     * 在集合开头插入一个值，并返回集合
      *
      * @param  mixed  $value
      * @param  mixed  $key
@@ -841,6 +846,7 @@ class Collection implements ArrayAccess, Enumerable
 
     /**
      * Push one or more items onto the end of the collection.
+     * 在集合结尾插入一个或多个值
      *
      * @param  mixed  $values [optional]
      * @return $this
@@ -856,6 +862,7 @@ class Collection implements ArrayAccess, Enumerable
 
     /**
      * Push all of the given items onto the collection.
+     * 将新的集合或数组附加到当前集合结尾
      *
      * @param  iterable  $source
      * @return static
@@ -873,6 +880,7 @@ class Collection implements ArrayAccess, Enumerable
 
     /**
      * Get and remove an item from the collection.
+     * 从集合中获取并移除指定键的值，如果不存在，可获取默认值（`$default`）
      *
      * @param  mixed  $key
      * @param  mixed  $default
@@ -885,6 +893,7 @@ class Collection implements ArrayAccess, Enumerable
 
     /**
      * Put an item in the collection by key.
+     * 将指定的键和值写入到集合，并返回集合；方法逻辑同 `offsetSet`，区别在于 `put()` 返回当前集合
      *
      * @param  mixed  $key
      * @param  mixed  $value
@@ -899,6 +908,7 @@ class Collection implements ArrayAccess, Enumerable
 
     /**
      * Get one or a specified number of items randomly from the collection.
+     * 随机返回一个值或指定数量值的集合（不返回键）
      *
      * @param  int|null  $number
      * @return static|mixed
@@ -907,6 +917,7 @@ class Collection implements ArrayAccess, Enumerable
      */
     public function random($number = null)
     {
+        // 未设置数量，返回一个
         if (is_null($number)) {
             return Arr::random($this->items);
         }
