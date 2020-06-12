@@ -742,6 +742,7 @@ class Collection implements ArrayAccess, Enumerable
 
     /**
      * Merge the collection with the given items.
+     * 把一个或多个数组/集合合并为一个集
      *
      * @param  mixed  $items
      * @return static
@@ -753,6 +754,7 @@ class Collection implements ArrayAccess, Enumerable
 
     /**
      * Recursively merge the collection with the given items.
+     * 递归地一个或多个数组/集合合并为一个集。
      *
      * @param  mixed  $items
      * @return static
@@ -764,6 +766,7 @@ class Collection implements ArrayAccess, Enumerable
 
     /**
      * Create a collection by using this collection for keys and another for its values.
+     * 通过合并两个数组/集合（一个为键名数组/集合，一个为键值数组/集合）来创建一个新集合
      *
      * @param  mixed  $values
      * @return static
@@ -775,6 +778,7 @@ class Collection implements ArrayAccess, Enumerable
 
     /**
      * Union the collection with the given items.
+     * 将两个数组或集合进行相加
      *
      * @param  mixed  $items
      * @return static
@@ -786,6 +790,7 @@ class Collection implements ArrayAccess, Enumerable
 
     /**
      * Create a new collection consisting of every n-th element.
+     * 创建由每隔 `$step` 个，并便宜 `$offset` 元素组成的一个新集合
      *
      * @param  int  $step
      * @param  int  $offset
@@ -798,6 +803,7 @@ class Collection implements ArrayAccess, Enumerable
         $position = 0;
 
         foreach ($this->items as $item) {
+            // 技巧，当期位置取模，等于偏移量
             if ($position % $step === $offset) {
                 $new[] = $item;
             }
