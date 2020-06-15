@@ -499,23 +499,27 @@ class Collection implements ArrayAccess, Enumerable
 
     /**
      * Key an associative array by a field or using a callback.
+     * 以指定的键作为集合的键。如果多个集合项具有相同的键，则只有最后一个集合项会显示在新集合中
      *
      * @param  callable|string  $keyBy
      * @return static
      */
     public function keyBy($keyBy)
     {
+        // 转换为可回调的函数
         $keyBy = $this->valueRetriever($keyBy);
 
         $results = [];
 
         foreach ($this->items as $key => $item) {
+            // 获取回调后的值
             $resolvedKey = $keyBy($item, $key);
 
             if (is_object($resolvedKey)) {
                 $resolvedKey = (string) $resolvedKey;
             }
 
+            // 作为键
             $results[$resolvedKey] = $item;
         }
 
@@ -564,6 +568,7 @@ class Collection implements ArrayAccess, Enumerable
 
     /**
      * Intersect the collection with the given items.
+     * 比较数组，返回两个数组的交集（只比较键值）
      *
      * @param  mixed  $items
      * @return static
@@ -575,6 +580,7 @@ class Collection implements ArrayAccess, Enumerable
 
     /**
      * Intersect the collection with the given items by key.
+     * 比较数组，返回两个数组的交集（只比较键名）
      *
      * @param  mixed  $items
      * @return static
@@ -960,6 +966,7 @@ class Collection implements ArrayAccess, Enumerable
 
     /**
      * Replace the collection items with the given items.
+     * 方法类似于 `merge()` ；但是，不仅可以覆盖匹配到的相同字符串键的集合项，而且也可以覆盖数字键的集合项
      *
      * @param  mixed  $items
      * @return static
@@ -1088,20 +1095,24 @@ class Collection implements ArrayAccess, Enumerable
 
     /**
      * Split a collection into a certain number of groups.
+     * 将集合拆分成指定数量的集合组
      *
      * @param  int  $numberOfGroups
      * @return static
      */
     public function split($numberOfGroups)
     {
+        // 如果集合为空，直接返回空对象
         if ($this->isEmpty()) {
             return new static;
         }
 
         $groups = new static;
 
+        // 集合总数除以参数，向下取整
         $groupSize = floor($this->count() / $numberOfGroups);
 
+        // 集合总数除以参数，取模
         $remain = $this->count() % $numberOfGroups;
 
         $start = 0;
